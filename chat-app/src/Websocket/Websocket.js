@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-
+import "../App.css"
 const socket = io('http://localhost:7397');
 
 const ChatApp = () => {
@@ -28,29 +28,12 @@ const ChatApp = () => {
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto' }}>
-    <div
-      style={{
-        height: '300px',
-        border: '1px solid #ccc',
-        padding: '10px',
-        overflow: 'auto',
-        marginBottom: '10px',
-      }}
-    >
+    <div className="container">
+    <div className="messageContainer">
       {messages.map((message, index) => (
         <div
           key={index}
-          style={{
-            backgroundColor: message.startsWith('You') ? '#DCF8C6' : '#ffffff',
-            padding: '8px',
-            marginBottom: '10px',
-            borderRadius: '8px',
-            maxWidth: '70%',
-            alignSelf: message.startsWith('You') ? 'flex-end' : 'flex-start',
-            marginLeft: message.startsWith('You') ? '30%' : '0',
-            marginRight: message.startsWith('You') ? '0' : '30%',
-          }}
+          className={`message ${message.startsWith('You') ? 'sent' : 'received'}`}
         >
           {message}
         </div>
@@ -61,29 +44,19 @@ const ChatApp = () => {
       placeholder="Recipient"
       value={recipient}
       onChange={handleRecipientChange}
-      style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+      className="input"
     />
     <input
       type="text"
       value={currentMessage}
       onChange={(e) => setCurrentMessage(e.target.value)}
-      style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+      className="input"
     />
-    <button
-      onClick={handleSendMessage}
-      style={{
-        backgroundColor: '#25D366',
-        color: 'white',
-        border: 'none',
-        padding: '10px 20px',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        width: '100%',
-      }}
-    >
+    <button onClick={handleSendMessage} className="button">
       Send
     </button>
   </div>
+  
   
   );
 };
