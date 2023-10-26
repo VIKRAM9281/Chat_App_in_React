@@ -17,10 +17,11 @@ const ChatApp = () => {
   const handleSendMessage = () => {
     if (recipient && currentMessage) {
       socket.emit('message', { sender: 'You', recipient, message: currentMessage });
-      setMessages([...messages, `You: ${currentMessage}`]);
+      setMessages([...messages, `${recipient}: ${currentMessage}`]);
       setCurrentMessage('');
     }
   };
+  
 
   const handleRecipientChange = (e) => {
     setRecipient(e.target.value);
@@ -28,59 +29,62 @@ const ChatApp = () => {
 
   return (
     <div style={{ maxWidth: '400px', margin: 'auto' }}>
-      <div
-        style={{
-          height: '300px',
-          border: '1px solid #ccc',
-          padding: '10px',
-          overflow: 'auto',
-          marginBottom: '10px',
-        }}
-      >
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            style={{
-              backgroundColor: message.startsWith('You') ? '#DCF8C6' : '#ffffff',
-              padding: '8px',
-              marginBottom: '8px',
-              borderRadius: '8px',
-              maxWidth: '70%',
-              alignSelf: message.startsWith('You') ? 'flex-end' : 'flex-start',
-            }}
-          >
-            {message}
-          </div>
-        ))}
-      </div>
-      <input
-        type="text"
-        placeholder="Recipient"
-        value={recipient}
-        onChange={handleRecipientChange}
-        style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
-      />
-      <input
-        type="text"
-        value={currentMessage}
-        onChange={(e) => setCurrentMessage(e.target.value)}
-        style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
-      />
-      <button
-        onClick={handleSendMessage}
-        style={{
-          backgroundColor: '#25D366',
-          color: 'white',
-          border: 'none',
-          padding: '10px 20px',
-          borderRadius: '5px',
-          cursor: 'pointer',
-          width: '100%',
-        }}
-      >
-        Send
-      </button>
+    <div
+      style={{
+        height: '300px',
+        border: '1px solid #ccc',
+        padding: '10px',
+        overflow: 'auto',
+        marginBottom: '10px',
+      }}
+    >
+      {messages.map((message, index) => (
+        <div
+          key={index}
+          style={{
+            backgroundColor: message.startsWith('You') ? '#DCF8C6' : '#ffffff',
+            padding: '8px',
+            marginBottom: '10px',
+            borderRadius: '8px',
+            maxWidth: '70%',
+            alignSelf: message.startsWith('You') ? 'flex-end' : 'flex-start',
+            marginLeft: message.startsWith('You') ? '30%' : '0',
+            marginRight: message.startsWith('You') ? '0' : '30%',
+          }}
+        >
+          {message}
+        </div>
+      ))}
     </div>
+    <input
+      type="text"
+      placeholder="Recipient"
+      value={recipient}
+      onChange={handleRecipientChange}
+      style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+    />
+    <input
+      type="text"
+      value={currentMessage}
+      onChange={(e) => setCurrentMessage(e.target.value)}
+      style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+    />
+    <button
+      onClick={handleSendMessage}
+      style={{
+        backgroundColor: '#25D366',
+        color: 'white',
+        border: 'none',
+        padding: '10px 20px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        width: '100%',
+      }}
+    >
+      Send
+    </button>
+  </div>
+  
   );
 };
 
